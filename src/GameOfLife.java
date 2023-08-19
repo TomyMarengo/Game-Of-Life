@@ -1,16 +1,12 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.BiFunction;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 
 public class GameOfLife {
-    private Particle[][][] grid;
+    private boolean[][][] grid;
     private final int maxStep;
     private final int radius;
     private final NeighborhoodType neighborhoodType;
@@ -19,18 +15,21 @@ public class GameOfLife {
     private final int gridSizeX;
     private final int gridSizeY;
     private final int gridSizeZ;
-    private final BiFunction<Particle, List<Particle>, Boolean> customRule;
+    private final BiFunction<Coordinates, List<Coordinates>, Boolean> customRule;
 
     public enum NeighborhoodType {
         VON_NEUMANN, MOORE
     }
 
-    public GameOfLife (Set<Particle> particles, int sizeX, int sizeY, int sizeZ, int radius, int maxStep,
-                       NeighborhoodType neighborhoodType, boolean is3d, BiFunction<Particle, List<Particle>, Boolean> customRule) {
-        grid = new Particle[sizeX][sizeY][sizeZ];
+    public GameOfLife (Set<Coordinates> coordinates, int sizeX, int sizeY, int sizeZ, int radius, int maxStep,
+                       NeighborhoodType neighborhoodType, boolean is3d, BiFunction<Coordinates, List<Coordinates>, Boolean> customRule) {
+        grid = new boolean[sizeX][sizeY][sizeZ];
+        this.gridSizeX = sizeX;
+        this.gridSizeY = sizeY;
+        this.gridSizeZ = sizeZ;
 
-        for (Particle particle : particles) {
-            grid[particle.x][particle.y][particle.z] = particle;
+        for (Coordinates coords : coordinates) {
+            grid[coords.x][coords.y][coords.z] = true;
         }
 
         this.maxStep = maxStep;
@@ -38,24 +37,15 @@ public class GameOfLife {
         this.neighborhoodType = neighborhoodType;
         this.is3d = is3d;
         this.currentStep = 0;
-
-        this.gridSizeX = grid.length;
-        this.gridSizeY = grid[0].length;
-        this.gridSizeZ = grid[0][0].length;
-
         this.customRule = customRule;
-    }
-
-    public Particle[][][] getGrid() {
-        return grid;
     }
 
     private boolean isCoordinateValid(int coordinate, int size) {
         return coordinate >= 0 && coordinate < size;
     }
 
-    private List<Particle> getNeighbors(Particle particle, Particle[][][] grid, int radius, NeighborhoodType neighborhoodType) {
-        List<Particle> neighbors = new ArrayList<>();
+    private List<Coordinates> getNeighbors(Coordinates coordinates, boolean[][][] grid, int radius, NeighborhoodType neighborhoodType) {
+        List<Coordinates> neighborsOffsetCoordinates = new ArrayList<>();
 
         for (int dz = -radius; dz <= radius; dz++) {
             for (int dy = -radius; dy <= radius; dy++) {
@@ -64,11 +54,11 @@ public class GameOfLife {
                         if (neighborhoodType == NeighborhoodType.VON_NEUMANN && Math.abs(dx) + Math.abs(dy) + Math.abs(dz) > radius) {
                             continue;
                         }
-                        if (isCoordinateValid(particle.x + dx, grid.length) &&
-                                isCoordinateValid(particle.y + dy, grid[0].length) &&
-                                isCoordinateValid(particle.z + dz, grid[0][0].length)) {
-                            if (grid[particle.x + dx][particle.y + dy][particle.z + dz] != null) {
-                                neighbors.add(grid[particle.x + dx][particle.y + dy][particle.z + dz]);
+                        if (isCoordinateValid(coordinates.x + dx, grid.length) &&
+                                isCoordinateValid(coordinates.y + dy, grid[0].length) &&
+                                isCoordinateValid(coordinates.z + dz, grid[0][0].length)) {
+                            if (grid[coordinates.x + dx][coordinates.y + dy][coordinates.z + dz]) {
+                                neighborsOffsetCoordinates.add(new Coordinates(dx, dy, dz));
                             }
                         }
                     }
@@ -76,58 +66,59 @@ public class GameOfLife {
                 }
             }
         }
-
-        return neighbors;
+        return neighborsOffsetCoordinates;
     }
 
-    private Particle[][][] doAStep() {
+    private boolean[][][] doAStep() {
 
-        Particle[][][] newGrid = new Particle[gridSizeX][gridSizeY][gridSizeZ];
+        boolean[][][] newGrid = new boolean[gridSizeX][gridSizeY][gridSizeZ];
 
         for (int x = 0; x < gridSizeX; x++) {
             for (int y = 0; y < gridSizeY; y++) {
                 for (int z = 0; z < gridSizeZ; z++) {
-                    if (grid[x][y][z] != null) {
-                        Particle particle = grid[x][y][z];
-                        List<Particle> neighbors = getNeighbors(particle, grid, radius, neighborhoodType);
-                        if (customRule.apply(particle, neighbors)) {
-                            newGrid[x][y][z] = new Particle(x, y, z);
-                        } else {
-                            newGrid[x][y][z] = null;
-                        }
-                    }
-                    else {
-                        newGrid[x][y][z] = null;
-                    }
+                    Coordinates coordinates = new Coordinates(x,y,z);
+                    // Returns Offsets like (+1, +1, +1), not the absolute coordinates
+                    List<Coordinates> neighborsOffsetCoordinates = getNeighbors(coordinates, grid, radius, neighborhoodType);
+                    newGrid[x][y][z] = customRule.apply(coordinates, neighborsOffsetCoordinates);
                 }
             }
         }
         return newGrid;
     }
 
-    public void start(GameOfLifeVisualization visualization) {
-        Timer timer = new Timer(2000, e -> {
-            if (currentStep == 0) {
-                visualization.updateGrid(grid);
-                currentStep++;
-            }
-            else if (currentStep < maxStep) {
-                grid = doAStep();
-                visualization.updateGrid(grid);
-                currentStep++;
-            } else {
-                ((Timer) e.getSource()).stop();
-            }
-        });
+    private void writeOutput(int step, boolean append) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt", append));
+            writer.write("TIEMPO " + step + "\n");
 
-        timer.setInitialDelay(0); // Comenzar el Timer inmediatamente
-        timer.start();
+            for (int z = 0; z < gridSizeZ; z++) {
+                for (int y = 0; y < gridSizeY; y++) {
+                    for (int x = 0; x < gridSizeX; x++) {
+                        writer.write(grid[x][y][z] ? "1" : "0");
+                    }
+                }
+                writer.write("\n");
+            }
+
+            writer.write("\n");
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void start() {
+        writeOutput(0, false);
+        for (int i = 1; i <= maxStep; i++) {
+            grid = doAStep();
+            writeOutput(i, true);
+        }
     }
 
     public static void main(String[] args) {
         int N, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep;
         boolean is3d;
-        Set<Particle> particles = new TreeSet<>();
+        Set<Coordinates> coordinates = new TreeSet<>();
 
         try {
             // Read static file
@@ -151,32 +142,25 @@ public class GameOfLife {
                     int x = Integer.parseInt(position[0]);
                     int y = Integer.parseInt(position[1]);
                     int z = Integer.parseInt(position[2]);
-                    particles.add(new Particle(x, y, z));
+                    coordinates.add(new Coordinates(x, y, z));
             }
             dynamicReader.close();
 
             /* -------------- */
 
             //Change this rule
-            BiFunction<Particle, List<Particle>, Boolean> customRule = (particle, neighbors) -> neighbors.size() >= 1;
+            BiFunction<Coordinates, List<Coordinates>, Boolean> customRule = (cords, neighbors) -> neighbors.isEmpty();
 
             //Change this NeighborhoodType
             NeighborhoodType neighborhoodType = NeighborhoodType.MOORE;
 
             /* -------------- */
 
-            GameOfLife game = new GameOfLife(particles, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep, neighborhoodType, is3d, customRule);
-
-            GameOfLifeVisualization visualization = new GameOfLifeVisualization(game.getGrid(), gridSizeX, gridSizeY, gridSizeZ);
-
-            game.start(visualization);
+            GameOfLife game = new GameOfLife(coordinates, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep, neighborhoodType, is3d, customRule);
+            game.start();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
-
     }
 }

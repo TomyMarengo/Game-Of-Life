@@ -5,12 +5,12 @@ import java.util.Random;
 
 public class WriteFiles {
 
-    private static final int N = 60; // Total number of particles
-    private static final int gridSizeX = 700;
-    private static final int gridSizeY = 700;
+    private static final int N = 10; // Total number of particles
+    private static final int gridSizeX = 100;
+    private static final int gridSizeY = 100;
     private static final int gridSizeZ = 0;
     private static final int radius = 1;
-    private static final int maxStep = 3;
+    private static final int maxStep = 10;
 
     public static void writeStaticFile() throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter("static.txt"));

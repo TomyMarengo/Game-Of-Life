@@ -1,12 +1,12 @@
 import java.text.DecimalFormat;
 import java.util.Objects;
 
-public class Particle implements Comparable<Particle> {
+public class Coordinates implements Comparable<Coordinates> {
     int x;
     int y;
     int z;
 
-    public Particle(int x, int y, int z) {
+    public Coordinates(int x, int y, int z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -20,16 +20,16 @@ public class Particle implements Comparable<Particle> {
     }
 
     @Override
-    public int compareTo(Particle otherParticle) {
-        int xComparison = Integer.compare(this.x, otherParticle.x);
+    public int compareTo(Coordinates otherCoordinates) {
+        int xComparison = Integer.compare(this.x, otherCoordinates.x);
         if (xComparison != 0) {
             return xComparison;
         }
-        int yComparison = Integer.compare(this.y, otherParticle.y);
+        int yComparison = Integer.compare(this.y, otherCoordinates.y);
         if (yComparison != 0) {
             return yComparison;
         }
-        return Integer.compare(this.z, otherParticle.z);
+        return Integer.compare(this.z, otherCoordinates.z);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class Particle implements Comparable<Particle> {
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        Particle particle = (Particle) obj;
-        return Objects.equals(x, particle.x) && Objects.equals(y, particle.y) && Objects.equals(z, particle.z);
+        Coordinates coordinates = (Coordinates) obj;
+        return Objects.equals(x, coordinates.x) && Objects.equals(y, coordinates.y) && Objects.equals(z, coordinates.z);
     }
 }

@@ -5,16 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b7867d9-b79a-4616-b661-17fcd4df9267" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/GameOfLife.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GameOfLifeVisualization.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Particle.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/WriteFiles.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameOfLife.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameOfLife.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameOfLifeVisualization.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Particle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Coordinates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WriteFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WriteFiles.java" afterDir="false" />
     </list>
-    <list id="b1505161-c8f1-46ea-a4cb-c0dc74675418" name="Changes by Natalie Johannessen" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
-    </list>
+    <list id="b1505161-c8f1-46ea-a4cb-c0dc74675418" name="Changes by Natalie Johannessen" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,9 +28,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2UA3riLpHVqHlwC08csFeitVo6Y" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -43,6 +41,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "main",
@@ -51,6 +50,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "C:/Users/Tomas/Documents/GitHub/GameOfLife/src/Main.java",
     "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.15",
@@ -101,7 +101,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1692368759493</updated>
-      <workItem from="1692368760499" duration="10365000" />
+      <workItem from="1692368760499" duration="11017000" />
+      <workItem from="1692407171836" duration="5732000" />
     </task>
     <servers />
   </component>
