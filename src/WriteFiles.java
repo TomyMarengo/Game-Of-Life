@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class WriteFiles {
 
-    private static final int N = 10; // Total number of particles
+    private static final int N = 3; // Total number of particles
     private static final int gridSizeX = 100;
     private static final int gridSizeY = 100;
     private static final int gridSizeZ = 0;

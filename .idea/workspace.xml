@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b7867d9-b79a-4616-b661-17fcd4df9267" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Rule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GameOfLife.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameOfLife.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameOfLifeVisualization.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Particle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Coordinates.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/WriteFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WriteFiles.java" afterDir="false" />
     </list>
     <list id="b1505161-c8f1-46ea-a4cb-c0dc74675418" name="Changes by Natalie Johannessen" comment="" />
@@ -22,6 +20,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -102,7 +101,7 @@
       <option name="presentableId" value="Default" />
       <updated>1692368759493</updated>
       <workItem from="1692368760499" duration="11017000" />
-      <workItem from="1692407171836" duration="5732000" />
+      <workItem from="1692407171836" duration="10249000" />
     </task>
     <servers />
   </component>

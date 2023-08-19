@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.function.BiFunction;
 
 public class GameOfLife {
     private boolean[][][] grid;
@@ -11,18 +10,17 @@ public class GameOfLife {
     private final int radius;
     private final NeighborhoodType neighborhoodType;
     private final boolean is3d;
-    private int currentStep;
     private final int gridSizeX;
     private final int gridSizeY;
     private final int gridSizeZ;
-    private final BiFunction<Coordinates, List<Coordinates>, Boolean> customRule;
+    private final Rule rule;
 
     public enum NeighborhoodType {
         VON_NEUMANN, MOORE
     }
 
     public GameOfLife (Set<Coordinates> coordinates, int sizeX, int sizeY, int sizeZ, int radius, int maxStep,
-                       NeighborhoodType neighborhoodType, boolean is3d, BiFunction<Coordinates, List<Coordinates>, Boolean> customRule) {
+                       NeighborhoodType neighborhoodType, Rule rule, boolean is3d) {
         grid = new boolean[sizeX][sizeY][sizeZ];
         this.gridSizeX = sizeX;
         this.gridSizeY = sizeY;
@@ -35,9 +33,8 @@ public class GameOfLife {
         this.maxStep = maxStep;
         this.radius = radius;
         this.neighborhoodType = neighborhoodType;
+        this.rule = rule;
         this.is3d = is3d;
-        this.currentStep = 0;
-        this.customRule = customRule;
     }
 
     private boolean isCoordinateValid(int coordinate, int size) {
@@ -62,7 +59,6 @@ public class GameOfLife {
                             }
                         }
                     }
-
                 }
             }
         }
@@ -77,18 +73,19 @@ public class GameOfLife {
             for (int y = 0; y < gridSizeY; y++) {
                 for (int z = 0; z < gridSizeZ; z++) {
                     Coordinates coordinates = new Coordinates(x,y,z);
-                    // Returns Offsets like (+1, +1, +1), not the absolute coordinates
+                    // Returns Offsets like (+1, 0, -1), not the absolute coordinates
                     List<Coordinates> neighborsOffsetCoordinates = getNeighbors(coordinates, grid, radius, neighborhoodType);
-                    newGrid[x][y][z] = customRule.apply(coordinates, neighborsOffsetCoordinates);
+                    newGrid[x][y][z] = rule.apply(new Rule.RuleParameters(neighborsOffsetCoordinates, grid[x][y][z], radius));
                 }
             }
         }
         return newGrid;
     }
 
-    private void writeOutput(int step, boolean append) {
+    private void writeOutputStep(int step) {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt", append));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(
+                    "../GameOfLifeAnimation/output.txt", true));
             writer.write("TIEMPO " + step + "\n");
 
             for (int z = 0; z < gridSizeZ; z++) {
@@ -108,10 +105,25 @@ public class GameOfLife {
     }
 
     public void start() {
-        writeOutput(0, false);
+        //Write more information about inputs to have in python project
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(
+                    "../GameOfLifeAnimation/output.txt"));
+            writer.write("MAXSTEP " + maxStep + "\n");
+            writer.write("SIZEX " + gridSizeX + "\n");
+            writer.write("SIZEY " + gridSizeY + "\n");
+            writer.write("SIZEZ " + gridSizeZ + "\n");
+            writer.write("\n");
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Write outputs step by step
+        writeOutputStep(0);
         for (int i = 1; i <= maxStep; i++) {
             grid = doAStep();
-            writeOutput(i, true);
+            writeOutputStep(i);
         }
     }
 
@@ -146,17 +158,7 @@ public class GameOfLife {
             }
             dynamicReader.close();
 
-            /* -------------- */
-
-            //Change this rule
-            BiFunction<Coordinates, List<Coordinates>, Boolean> customRule = (cords, neighbors) -> neighbors.isEmpty();
-
-            //Change this NeighborhoodType
-            NeighborhoodType neighborhoodType = NeighborhoodType.MOORE;
-
-            /* -------------- */
-
-            GameOfLife game = new GameOfLife(coordinates, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep, neighborhoodType, is3d, customRule);
+            GameOfLife game = new GameOfLife(coordinates, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep, NeighborhoodType.MOORE, Rule.CONWAY, is3d);
             game.start();
 
         } catch (IOException e) {
