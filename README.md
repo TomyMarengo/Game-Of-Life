@@ -12,4 +12,4 @@ Proyecto inspirado en la famosa simulación de Conway.
 
 1. Clona este repositorio.
 2. Clona el repositorio requisito en la misma carpeta root.
-3. Ejecuta el script **.bat** dentro de este la carpeta repositorio.
+3. Ejecuta alguno de los scripts **.bat** dentro de los repositorios.
