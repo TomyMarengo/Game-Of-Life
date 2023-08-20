@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b7867d9-b79a-4616-b661-17fcd4df9267" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/GameOfLife.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/script.bat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameOfLife.iml" beforeDir="false" afterPath="$PROJECT_DIR$/GameOfLife.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameOfLife.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/WriteFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WriteFiles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameOfLife.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameOfLife.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/script.bat" beforeDir="false" afterPath="$PROJECT_DIR$/script.bat" afterDir="false" />
     </list>
     <list id="b1505161-c8f1-46ea-a4cb-c0dc74675418" name="Changes by Natalie Johannessen" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,7 +69,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.WriteFiles">
+  <component name="RunManager" selected="Batch.script">
     <configuration name="GameOfLife" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GameOfLife" />
       <module name="GameOfLife" />
@@ -94,8 +91,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="script" type="BatchConfigurationType" factoryName="Batch" temporary="true">
+      <module name="GameOfLife" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\Tomas\Documents\GitHub\GameOfLife" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SCRIPT_NAME" value="script.bat" />
+      <option name="PARAMETERS" value="" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Batch.script" />
         <item itemvalue="Application.WriteFiles" />
         <item itemvalue="Application.GameOfLife" />
         <item itemvalue="Application.Main" />
@@ -112,7 +121,7 @@
       <updated>1692368759493</updated>
       <workItem from="1692368760499" duration="11017000" />
       <workItem from="1692407171836" duration="12092000" />
-      <workItem from="1692487234575" duration="7076000" />
+      <workItem from="1692487234575" duration="8765000" />
     </task>
     <servers />
   </component>

@@ -118,9 +118,24 @@ public class GameOfLife {
 
         //Write outputs step by step
         writeOutputStep(0);
+
+        long startTime, endTime, elapsedTime = 0;
+
         for (int i = 1; i <= maxStep; i++) {
+            startTime = System.currentTimeMillis();
             grid = doAStep();
+            endTime = System.currentTimeMillis();
+            elapsedTime = elapsedTime + endTime - startTime;
             writeOutputStep(i);
+        }
+
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(
+                    "../GameOfLifeAnimation/output.txt", true));
+            writer.write("ELAPSEDTIME " + elapsedTime);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
