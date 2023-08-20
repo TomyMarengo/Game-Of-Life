@@ -9,7 +9,6 @@ public class GameOfLife {
     private final int maxStep;
     private final int radius;
     private final NeighborhoodType neighborhoodType;
-    private final boolean is3d;
     private final int gridSizeX;
     private final int gridSizeY;
     private final int gridSizeZ;
@@ -20,7 +19,7 @@ public class GameOfLife {
     }
 
     public GameOfLife (Set<Coordinates> coordinates, int sizeX, int sizeY, int sizeZ, int radius, int maxStep,
-                       NeighborhoodType neighborhoodType, Rule rule, boolean is3d) {
+                       NeighborhoodType neighborhoodType, Rule rule) {
         grid = new boolean[sizeX][sizeY][sizeZ];
         this.gridSizeX = sizeX;
         this.gridSizeY = sizeY;
@@ -34,7 +33,6 @@ public class GameOfLife {
         this.radius = radius;
         this.neighborhoodType = neighborhoodType;
         this.rule = rule;
-        this.is3d = is3d;
     }
 
     private boolean isCoordinateValid(int coordinate, int size) {
@@ -94,7 +92,6 @@ public class GameOfLife {
                         writer.write(grid[x][y][z] ? "1" : "0");
                     }
                 }
-                writer.write("\n");
             }
 
             writer.write("\n");
@@ -129,19 +126,17 @@ public class GameOfLife {
 
     public static void main(String[] args) {
         int N, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep;
-        boolean is3d;
         Set<Coordinates> coordinates = new TreeSet<>();
 
         try {
             // Read static file
             BufferedReader staticReader = new BufferedReader(new FileReader("static.txt"));
-            N = Integer.parseInt(staticReader.readLine());
-            gridSizeX = Integer.parseInt(staticReader.readLine());
-            gridSizeY = Integer.parseInt(staticReader.readLine());
-            gridSizeZ = Integer.parseInt(staticReader.readLine());
-            radius = Integer.parseInt(staticReader.readLine());
-            maxStep = Integer.parseInt(staticReader.readLine());
-            is3d = gridSizeZ > 1;
+            N = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+            radius = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+            maxStep = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+            gridSizeX = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+            gridSizeY = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+            gridSizeZ = Integer.parseInt(staticReader.readLine().split(" ")[1]);
 
             staticReader.close();
 
@@ -150,15 +145,15 @@ public class GameOfLife {
             String line;
 
             while ((line = dynamicReader.readLine()) != null) {
-                    String[] position = line.split(" ");
-                    int x = Integer.parseInt(position[0]);
-                    int y = Integer.parseInt(position[1]);
-                    int z = Integer.parseInt(position[2]);
-                    coordinates.add(new Coordinates(x, y, z));
+                String[] position = line.split(" ");
+                int x = Integer.parseInt(position[0]);
+                int y = Integer.parseInt(position[1]);
+                int z = Integer.parseInt(position[2]);
+                coordinates.add(new Coordinates(x, y, z));
             }
             dynamicReader.close();
 
-            GameOfLife game = new GameOfLife(coordinates, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep, NeighborhoodType.MOORE, Rule.CONWAY, is3d);
+            GameOfLife game = new GameOfLife(coordinates, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep, NeighborhoodType.MOORE, Rule.CONWAY);
             game.start();
 
         } catch (IOException e) {
