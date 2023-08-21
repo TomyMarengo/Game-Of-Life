@@ -153,6 +153,8 @@ public class GameOfLife {
 
     public static void main(String[] args) {
         int N, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep;
+        Rule rule;
+        NeighborhoodType neighborhoodType;
         Set<Coordinates> coordinates = new TreeSet<>();
 
         try {
@@ -160,6 +162,8 @@ public class GameOfLife {
             BufferedReader staticReader = new BufferedReader(new FileReader("static.txt"));
             N = Integer.parseInt(staticReader.readLine().split(" ")[1]);
             radius = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+            rule = Rule.valueOf(staticReader.readLine().split(" ")[1]);
+            neighborhoodType = NeighborhoodType.valueOf(staticReader.readLine().split(" ")[1]);
             maxStep = Integer.parseInt(staticReader.readLine().split(" ")[1]);
             gridSizeX = Integer.parseInt(staticReader.readLine().split(" ")[1]);
             gridSizeY = Integer.parseInt(staticReader.readLine().split(" ")[1]);
@@ -180,7 +184,7 @@ public class GameOfLife {
             }
             dynamicReader.close();
 
-            GameOfLife game = new GameOfLife(coordinates, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep, NeighborhoodType.MOORE, Rule.CORAL);
+            GameOfLife game = new GameOfLife(coordinates, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep, neighborhoodType, rule);
             game.start();
 
         } catch (IOException e) {
