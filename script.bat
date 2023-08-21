@@ -6,5 +6,6 @@ java GameOfLife
 del *.class
 cd ../GameOfLifeAnimation/src
 python animation2d.py
+python animation3d.py
 
 echo Script completado.

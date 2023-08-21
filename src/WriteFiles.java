@@ -5,16 +5,16 @@ import java.util.Random;
 import java.util.*;
 
 public class WriteFiles {
-    private static final int gridSizeX = 100;
-    private static final int gridSizeY = 100;
-    private static final int gridSizeZ = 1;
+    private static final int gridSizeX = 30;
+    private static final int gridSizeY = 30;
+    private static final int gridSizeZ = 30;
     private static final int radius = 1;
-    private static final int maxStep = 1000;
+    private static final int maxStep = 500;
     private static final Rule rule = Rule.CORAL;
     private static final GameOfLife.NeighborhoodType neighborhoodType = GameOfLife.NeighborhoodType.MOORE;
     private static final double lowerBound = 0.4;
     private static final double upperBound = 0.6;
-    private static final double firstAlive = 1;
+    private static final double firstAlive = 0.8;
 
 
     public static void writeStaticFile(int N) throws IOException {
