@@ -13,6 +13,8 @@ public class GameOfLife {
     private final int gridSizeY;
     private final int gridSizeZ;
     private final Rule rule;
+    private boolean borderReached;
+    private boolean allDead;
 
     public enum NeighborhoodType {
         VON_NEUMANN, MOORE
@@ -33,6 +35,7 @@ public class GameOfLife {
         this.radius = radius;
         this.neighborhoodType = neighborhoodType;
         this.rule = rule;
+        this.borderReached = false;
     }
 
     private boolean isCoordinateValid(int coordinate, int size) {
@@ -54,6 +57,11 @@ public class GameOfLife {
                                 isCoordinateValid(coordinates.z + dz, grid[0][0].length)) {
                             if (grid[coordinates.x + dx][coordinates.y + dy][coordinates.z + dz]) {
                                 neighborsOffsetCoordinates.add(new Coordinates(dx, dy, dz));
+                                if(!borderReached && (coordinates.x + dx == 0 || coordinates.x + dx == gridSizeX - 1
+                                        || coordinates.y + dy == 0 || coordinates.y + dy == gridSizeY - 1
+                                        || (gridSizeZ>1 && (coordinates.z + dz == 0 || coordinates.z + dz == gridSizeZ - 1)))) {
+                                    borderReached = true;
+                                }
                             }
                         }
                     }
@@ -74,6 +82,9 @@ public class GameOfLife {
                     // Returns Offsets like (+1, 0, -1), not the absolute coordinates
                     List<Coordinates> neighborsOffsetCoordinates = getNeighbors(coordinates, grid, radius, neighborhoodType);
                     newGrid[x][y][z] = rule.apply(new Rule.RuleParameters(neighborsOffsetCoordinates, grid[x][y][z], radius));
+                    if (newGrid[x][y][z]) {
+                        allDead = false;
+                    }
                 }
             }
         }
@@ -106,7 +117,6 @@ public class GameOfLife {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(
                     "../GameOfLifeAnimation/output.txt"));
-            writer.write("MAXSTEP " + maxStep + "\n");
             writer.write("SIZEX " + gridSizeX + "\n");
             writer.write("SIZEY " + gridSizeY + "\n");
             writer.write("SIZEZ " + gridSizeZ + "\n");
@@ -120,8 +130,9 @@ public class GameOfLife {
         writeOutputStep(0);
 
         long startTime, endTime, elapsedTime = 0;
-
-        for (int i = 1; i <= maxStep; i++) {
+        int i;
+        for (i = 1; i <= maxStep && !borderReached && !allDead; i++) {
+            allDead = true;
             startTime = System.currentTimeMillis();
             grid = doAStep();
             endTime = System.currentTimeMillis();
@@ -132,7 +143,8 @@ public class GameOfLife {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(
                     "../GameOfLifeAnimation/output.txt", true));
-            writer.write("ELAPSEDTIME " + elapsedTime);
+            writer.write("ELAPSEDTIME " + elapsedTime + "\n");
+            writer.write("MAXSTEP " + i);
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -168,7 +180,7 @@ public class GameOfLife {
             }
             dynamicReader.close();
 
-            GameOfLife game = new GameOfLife(coordinates, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep, NeighborhoodType.MOORE, Rule.CONWAY);
+            GameOfLife game = new GameOfLife(coordinates, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep, NeighborhoodType.MOORE, Rule.CORAL);
             game.start();
 
         } catch (IOException e) {

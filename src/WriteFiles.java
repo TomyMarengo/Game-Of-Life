@@ -5,12 +5,14 @@ import java.util.Random;
 
 public class WriteFiles {
 
-    private static final int N = 3; // Total number of particles
+    private static final int N = 100; // Total number of particles
     private static final int gridSizeX = 100;
     private static final int gridSizeY = 100;
-    private static final int gridSizeZ = 3;
+    private static final int gridSizeZ = 1;
     private static final int radius = 1;
-    private static final int maxStep = 10;
+    private static final int maxStep = 180;
+    private static final double lowerBound = 0.45;
+    private static final double upperBound = 0.55;
 
     public static void writeStaticFile() throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter("static.txt"));
@@ -46,9 +48,9 @@ public class WriteFiles {
 
         // Position initialization
         for (int i = 0; i < N; i++) {
-            positions[i][0] = random.nextInt(gridSizeX); // X position
-            positions[i][1] = random.nextInt(gridSizeY); // Y position
-            positions[i][2] = random.nextInt(gridSizeZ);; // Z position
+            positions[i][0] = (int) (gridSizeX * (lowerBound + random.nextDouble() * (upperBound - lowerBound))); // X position
+            positions[i][1] = (int) (gridSizeY * (lowerBound + random.nextDouble() * (upperBound - lowerBound))); // Y position
+            positions[i][2] = (int) (gridSizeZ * (lowerBound + random.nextDouble() * (upperBound - lowerBound))); // Z position
         }
         try {
             writeDynamicFile(positions);
