@@ -193,10 +193,6 @@ public class GameOfLife {
                 }
                 dynamicReader.close();
 
-                System.out.println(input);
-                System.out.println(coordinates);
-                System.out.println(coordinates.size());
-
                 GameOfLife game = new GameOfLife(coordinates, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep, neighborhoodType, rule);
                 game.start();
 
