@@ -15,6 +15,7 @@ public class GameOfLife {
     private final Rule rule;
     private boolean borderReached;
     private boolean allDead;
+    private static int alive;
 
     public enum NeighborhoodType {
         VON_NEUMANN, MOORE
@@ -94,7 +95,7 @@ public class GameOfLife {
     private void writeOutputStep(int step) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(
-                    "../GameOfLifeAnimation/output.txt", true));
+                    "../GameOfLifeAnimation/output_" + alive + ".txt", true));
             writer.write("TIEMPO " + step + "\n");
 
             for (int z = 0; z < gridSizeZ; z++) {
@@ -116,7 +117,7 @@ public class GameOfLife {
         //Write more information about inputs to have in python project
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(
-                    "../GameOfLifeAnimation/output.txt"));
+                    "../GameOfLifeAnimation/output_" + alive + ".txt"));
             writer.write("SIZEX " + gridSizeX + "\n");
             writer.write("SIZEY " + gridSizeY + "\n");
             writer.write("SIZEZ " + gridSizeZ + "\n");
@@ -142,9 +143,10 @@ public class GameOfLife {
 
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(
-                    "../GameOfLifeAnimation/output.txt", true));
+                    "../GameOfLifeAnimation/output_" + alive + ".txt", true));
             writer.write("ELAPSEDTIME " + elapsedTime + "\n");
-            writer.write("MAXSTEP " + i);
+            writer.write("MAXSTEP " + i + "\n");
+            writer.write("ALIVE " + alive);
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -165,6 +167,7 @@ public class GameOfLife {
             rule = Rule.valueOf(staticReader.readLine().split(" ")[1]);
             neighborhoodType = NeighborhoodType.valueOf(staticReader.readLine().split(" ")[1]);
             maxStep = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+            alive = Integer.parseInt(staticReader.readLine().split(" ")[1]);
             gridSizeX = Integer.parseInt(staticReader.readLine().split(" ")[1]);
             gridSizeY = Integer.parseInt(staticReader.readLine().split(" ")[1]);
             gridSizeZ = Integer.parseInt(staticReader.readLine().split(" ")[1]);

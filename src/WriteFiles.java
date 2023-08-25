@@ -24,6 +24,7 @@ public class WriteFiles {
         writer.write("RULE " + rule.name() + "\n");
         writer.write("NTYPE " + neighborhoodType.name() + "\n");
         writer.write("MAXSTEP " + maxStep + "\n");
+        writer.write("ALIVE " + (int) (firstAlive * 100) + "\n");
         writer.write("SIZEX " + gridSizeX + "\n");
         writer.write("SIZEY " + gridSizeY + "\n");
         writer.write("SIZEZ " + gridSizeZ + "\n");
