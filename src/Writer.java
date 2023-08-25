@@ -18,7 +18,7 @@ public class Writer {
 
 
     private void writeStaticFile(int N) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("static_" + firstAlive + ".txt"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("txt/static_" + firstAlive + ".txt"));
         writer.write("N " + N + "\n");
         writer.write("RADIUS " + radius + "\n");
         writer.write("RULE " + rule.name() + "\n");
@@ -33,7 +33,7 @@ public class Writer {
     }
 
     private void writeDynamicFile(Set<Coordinates> particlePositions) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("dynamic_" + firstAlive + ".txt"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("txt/dynamic_" + firstAlive + ".txt"));
         for (Coordinates coordinates : particlePositions) {
             writer.write(coordinates.x + " " + coordinates.y + " " + coordinates.z + "\n");
         }

@@ -167,7 +167,7 @@ public class GameOfLife {
 
             try {
                 // Read static file
-                BufferedReader staticReader = new BufferedReader(new FileReader("static_" + input + ".txt"));
+                BufferedReader staticReader = new BufferedReader(new FileReader("txt/static_" + input + ".txt"));
                 N = Integer.parseInt(staticReader.readLine().split(" ")[1]);
                 radius = Integer.parseInt(staticReader.readLine().split(" ")[1]);
                 rule = Rule.valueOf(staticReader.readLine().split(" ")[1]);
@@ -181,7 +181,7 @@ public class GameOfLife {
                 staticReader.close();
 
                 // Read dynamic file
-                BufferedReader dynamicReader = new BufferedReader(new FileReader("dynamic_" + input + ".txt"));
+                BufferedReader dynamicReader = new BufferedReader(new FileReader("txt/dynamic_" + input + ".txt"));
                 String line;
 
                 while ((line = dynamicReader.readLine()) != null) {
