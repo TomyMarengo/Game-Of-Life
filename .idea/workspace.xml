@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b7867d9-b79a-4616-b661-17fcd4df9267" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GameOfLife.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameOfLife.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/WriteFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Writer.java" afterDir="false" />
     </list>
     <list id="b1505161-c8f1-46ea-a4cb-c0dc74675418" name="Changes by Natalie Johannessen" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -126,7 +123,7 @@
       <workItem from="1692575756801" duration="6449000" />
       <workItem from="1692649734269" duration="5931000" />
       <workItem from="1692968834414" duration="218000" />
-      <workItem from="1692969365684" duration="4585000" />
+      <workItem from="1692969365684" duration="5094000" />
     </task>
     <servers />
   </component>

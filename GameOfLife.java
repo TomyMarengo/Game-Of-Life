@@ -157,47 +157,52 @@ public class GameOfLife {
         int N, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep;
         Rule rule;
         NeighborhoodType neighborhoodType;
-        Set<Coordinates> coordinates = new TreeSet<>();
+
 
         double[] inputs = {1, 0.85, 0.70, 0.55, 0.40, 0.25};
         Writer writer = new Writer();
         for(double input : inputs) {
             writer.write(input);
-        }
+            Set<Coordinates> coordinates = new TreeSet<>();
 
-        try {
-            // Read static file
-            BufferedReader staticReader = new BufferedReader(new FileReader("static.txt"));
-            N = Integer.parseInt(staticReader.readLine().split(" ")[1]);
-            radius = Integer.parseInt(staticReader.readLine().split(" ")[1]);
-            rule = Rule.valueOf(staticReader.readLine().split(" ")[1]);
-            neighborhoodType = NeighborhoodType.valueOf(staticReader.readLine().split(" ")[1]);
-            maxStep = Integer.parseInt(staticReader.readLine().split(" ")[1]);
-            alive = Integer.parseInt(staticReader.readLine().split(" ")[1]);
-            gridSizeX = Integer.parseInt(staticReader.readLine().split(" ")[1]);
-            gridSizeY = Integer.parseInt(staticReader.readLine().split(" ")[1]);
-            gridSizeZ = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+            try {
+                // Read static file
+                BufferedReader staticReader = new BufferedReader(new FileReader("static_" + input + ".txt"));
+                N = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+                radius = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+                rule = Rule.valueOf(staticReader.readLine().split(" ")[1]);
+                neighborhoodType = NeighborhoodType.valueOf(staticReader.readLine().split(" ")[1]);
+                maxStep = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+                alive = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+                gridSizeX = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+                gridSizeY = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+                gridSizeZ = Integer.parseInt(staticReader.readLine().split(" ")[1]);
 
-            staticReader.close();
+                staticReader.close();
 
-            // Read dynamic file
-            BufferedReader dynamicReader = new BufferedReader(new FileReader("dynamic.txt"));
-            String line;
+                // Read dynamic file
+                BufferedReader dynamicReader = new BufferedReader(new FileReader("dynamic_" + input + ".txt"));
+                String line;
 
-            while ((line = dynamicReader.readLine()) != null) {
-                String[] position = line.split(" ");
-                int x = Integer.parseInt(position[0]);
-                int y = Integer.parseInt(position[1]);
-                int z = Integer.parseInt(position[2]);
-                coordinates.add(new Coordinates(x, y, z));
+                while ((line = dynamicReader.readLine()) != null) {
+                    String[] position = line.split(" ");
+                    int x = Integer.parseInt(position[0]);
+                    int y = Integer.parseInt(position[1]);
+                    int z = Integer.parseInt(position[2]);
+                    coordinates.add(new Coordinates(x, y, z));
+                }
+                dynamicReader.close();
+
+                System.out.println(input);
+                System.out.println(coordinates);
+                System.out.println(coordinates.size());
+
+                GameOfLife game = new GameOfLife(coordinates, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep, neighborhoodType, rule);
+                game.start();
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            dynamicReader.close();
-
-            GameOfLife game = new GameOfLife(coordinates, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep, neighborhoodType, rule);
-            game.start();
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }
