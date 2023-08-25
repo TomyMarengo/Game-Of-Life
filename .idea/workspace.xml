@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b7867d9-b79a-4616-b661-17fcd4df9267" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GameOfLife.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameOfLife.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/WriteFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WriteFiles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WriteFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Writer.java" afterDir="false" />
     </list>
     <list id="b1505161-c8f1-46ea-a4cb-c0dc74675418" name="Changes by Natalie Johannessen" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -85,8 +85,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WriteFiles" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="WriteFiles" />
+    <configuration name="Writer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Writer" />
       <module name="GameOfLife" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -106,7 +106,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.GameOfLife" />
-        <item itemvalue="Application.WriteFiles" />
+        <item itemvalue="Application.Writer" />
         <item itemvalue="Batch.script" />
         <item itemvalue="Application.Main" />
       </list>
@@ -126,7 +126,7 @@
       <workItem from="1692575756801" duration="6449000" />
       <workItem from="1692649734269" duration="5931000" />
       <workItem from="1692968834414" duration="218000" />
-      <workItem from="1692969365684" duration="3486000" />
+      <workItem from="1692969365684" duration="4585000" />
     </task>
     <servers />
   </component>

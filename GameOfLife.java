@@ -159,6 +159,12 @@ public class GameOfLife {
         NeighborhoodType neighborhoodType;
         Set<Coordinates> coordinates = new TreeSet<>();
 
+        double[] inputs = {1, 0.85, 0.70, 0.55, 0.40, 0.25};
+        Writer writer = new Writer();
+        for(double input : inputs) {
+            writer.write(input);
+        }
+
         try {
             // Read static file
             BufferedReader staticReader = new BufferedReader(new FileReader("static.txt"));

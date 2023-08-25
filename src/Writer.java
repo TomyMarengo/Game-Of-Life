@@ -4,21 +4,21 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.*;
 
-public class WriteFiles {
-    private static final int gridSizeX = 30;
-    private static final int gridSizeY = 30;
-    private static final int gridSizeZ = 30;
-    private static final int radius = 1;
-    private static final int maxStep = 500;
-    private static final Rule rule = Rule.CORAL;
-    private static final GameOfLife.NeighborhoodType neighborhoodType = GameOfLife.NeighborhoodType.MOORE;
-    private static final double lowerBound = 0.4;
-    private static final double upperBound = 0.6;
-    private static final double firstAlive = 0.8;
+public class Writer {
+    private final int gridSizeX = 30;
+    private final int gridSizeY = 30;
+    private final int gridSizeZ = 30;
+    private final int radius = 1;
+    private final int maxStep = 500;
+    private final Rule rule = Rule.CORAL;
+    private final GameOfLife.NeighborhoodType neighborhoodType = GameOfLife.NeighborhoodType.MOORE;
+    private final double lowerBound = 0.4;
+    private final double upperBound = 0.6;
+    private double firstAlive;
 
 
-    public static void writeStaticFile(int N) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("static.txt"));
+    private void writeStaticFile(int N) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter("static_" + firstAlive + ".txt"));
         writer.write("N " + N + "\n");
         writer.write("RADIUS " + radius + "\n");
         writer.write("RULE " + rule.name() + "\n");
@@ -32,8 +32,8 @@ public class WriteFiles {
         writer.close();
     }
 
-    public static void writeDynamicFile(Set<Coordinates> particlePositions) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("dynamic.txt"));
+    private void writeDynamicFile(Set<Coordinates> particlePositions) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter("dynamic_" + firstAlive + ".txt"));
         for (Coordinates coordinates : particlePositions) {
             writer.write(coordinates.x + " " + coordinates.y + " " + coordinates.z + "\n");
         }
@@ -42,13 +42,14 @@ public class WriteFiles {
 
 
     // Change numbers in this method to have other inputs
-    public static void main(String[] args) {
+    public void write(double firstAlive) {
+        this.firstAlive = firstAlive;
         int domainSizeX = (int) (gridSizeX * upperBound - gridSizeX * lowerBound + 1);
         int domainSizeY = (int) (gridSizeY * upperBound - gridSizeY * lowerBound + 1);
         int domainSizeZ = (int) (gridSizeZ * upperBound - gridSizeZ * lowerBound + 1);
 
         int totalPositions = domainSizeX * domainSizeY * domainSizeZ;
-        int desiredParticles = (int) (totalPositions * firstAlive); // 50% of total domain positions
+        int desiredParticles = (int) (totalPositions * firstAlive);
 
         Set<Coordinates> particlePositions = new TreeSet<>();
         Random random = new Random();
