@@ -16,6 +16,7 @@ public class GameOfLife {
     private boolean borderReached;
     private boolean allDead;
     private static int alive;
+    private String dimension;
 
     public enum NeighborhoodType {
         VON_NEUMANN, MOORE
@@ -95,7 +96,12 @@ public class GameOfLife {
     private void writeOutputStep(int step) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(
-                    "../GameOfLifeAnimation/output_" + alive + ".txt", true));
+                    "../GameOfLifeAnimation/outputs/" + dimension + "/output_"
+                            + dimension + "_"
+                            + rule.name() + "_"
+                            + neighborhoodType.name() + "_"
+                            + "r" + radius + "_"
+                            + alive + ".txt", true));
             writer.write("TIEMPO " + step + "\n");
 
             for (int z = 0; z < gridSizeZ; z++) {
@@ -114,20 +120,8 @@ public class GameOfLife {
     }
 
     public void start() {
-        //Write more information about inputs to have in python project
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(
-                    "../GameOfLifeAnimation/output_" + alive + ".txt"));
-            writer.write("SIZEX " + gridSizeX + "\n");
-            writer.write("SIZEY " + gridSizeY + "\n");
-            writer.write("SIZEZ " + gridSizeZ + "\n");
-            writer.write("\n");
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         //Write outputs step by step
+        dimension = gridSizeZ > 1 ? "3d" : "2d";
         writeOutputStep(0);
 
         long startTime, endTime, elapsedTime = 0;
@@ -143,14 +137,36 @@ public class GameOfLife {
 
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(
-                    "../GameOfLifeAnimation/output_" + alive + ".txt", true));
+                    "../GameOfLifeAnimation/outputs/" + dimension + "/output_"
+                            + dimension + "_"
+                            + rule.name() + "_"
+                            + neighborhoodType.name() + "_"
+                            + "r" + radius + "_"
+                            + alive + ".txt", true));
             writer.write("ELAPSEDTIME " + elapsedTime + "\n");
-            writer.write("MAXSTEP " + i + "\n");
-            writer.write("ALIVE " + alive);
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        try {
+            BufferedWriter writerPy = new BufferedWriter(new FileWriter("../GameOfLifeAnimation/outputs/" +
+                    dimension + "/data" +  dimension + ".txt", true));
+
+            writerPy.write("RULE " + rule.name() + "\n");
+            writerPy.write("NTYPE " + neighborhoodType.name() + "\n");
+            writerPy.write("RADIUS " + radius + "\n");
+            writerPy.write("ALIVE " + alive + "\n");
+            writerPy.write("MAXSTEP " + i + "\n");
+            writerPy.write("SIZEX " + gridSizeX + "\n");
+            writerPy.write("SIZEY " + gridSizeY + "\n");
+            writerPy.write("SIZEZ " + gridSizeZ + "\n\n");
+
+            writerPy.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static void main(String[] args) {
