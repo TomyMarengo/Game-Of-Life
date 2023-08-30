@@ -15,7 +15,8 @@ public class GameOfLife {
     private final Rule rule;
     private boolean borderReached;
     private boolean allDead;
-    private static int alive;
+    private int alive;
+    private int rep;
     private String dimension;
 
     public enum NeighborhoodType {
@@ -23,7 +24,7 @@ public class GameOfLife {
     }
 
     public GameOfLife (Set<Coordinates> coordinates, int sizeX, int sizeY, int sizeZ, int radius, int maxStep,
-                       NeighborhoodType neighborhoodType, Rule rule) {
+                       NeighborhoodType neighborhoodType, Rule rule, int alive, int rep) {
         grid = new boolean[sizeX][sizeY][sizeZ];
         this.gridSizeX = sizeX;
         this.gridSizeY = sizeY;
@@ -38,6 +39,8 @@ public class GameOfLife {
         this.neighborhoodType = neighborhoodType;
         this.rule = rule;
         this.borderReached = false;
+        this.alive = alive;
+        this.rep = rep;
     }
 
     private boolean isCoordinateValid(int coordinate, int size) {
@@ -101,7 +104,9 @@ public class GameOfLife {
                             + rule.name() + "_"
                             + neighborhoodType.name() + "_"
                             + "r" + radius + "_"
-                            + alive + ".txt", true));
+                            + alive + "_"
+                            + rep +
+                            ".txt", true));
             writer.write("TIEMPO " + step + "\n");
 
             for (int z = 0; z < gridSizeZ; z++) {
@@ -142,7 +147,9 @@ public class GameOfLife {
                             + rule.name() + "_"
                             + neighborhoodType.name() + "_"
                             + "r" + radius + "_"
-                            + alive + ".txt", true));
+                            + alive + "_"
+                            + rep +
+                            ".txt", true));
             writer.write("ELAPSEDTIME " + elapsedTime + "\n");
             writer.close();
         } catch (IOException e) {
@@ -170,50 +177,54 @@ public class GameOfLife {
     }
 
     public static void main(String[] args) {
-        int N, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep;
+        int N, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep, firstAlive;
         Rule rule;
         NeighborhoodType neighborhoodType;
 
 
         double[] inputs = {1, 0.85, 0.70, 0.55, 0.40, 0.25};
+        int maxRep = 5;
         Writer writer = new Writer();
+
         for(double input : inputs) {
-            writer.write(input);
-            Set<Coordinates> coordinates = new TreeSet<>();
+            for (int rep = 0; rep < maxRep; rep++) {
+                writer.write(input);
+                Set<Coordinates> coordinates = new TreeSet<>();
 
-            try {
-                // Read static file
-                BufferedReader staticReader = new BufferedReader(new FileReader("txt/static_" + input + ".txt"));
-                N = Integer.parseInt(staticReader.readLine().split(" ")[1]);
-                radius = Integer.parseInt(staticReader.readLine().split(" ")[1]);
-                rule = Rule.valueOf(staticReader.readLine().split(" ")[1]);
-                neighborhoodType = NeighborhoodType.valueOf(staticReader.readLine().split(" ")[1]);
-                maxStep = Integer.parseInt(staticReader.readLine().split(" ")[1]);
-                alive = Integer.parseInt(staticReader.readLine().split(" ")[1]);
-                gridSizeX = Integer.parseInt(staticReader.readLine().split(" ")[1]);
-                gridSizeY = Integer.parseInt(staticReader.readLine().split(" ")[1]);
-                gridSizeZ = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+                try {
+                    // Read static file
+                    BufferedReader staticReader = new BufferedReader(new FileReader("txt/static_" + input + ".txt"));
+                    N = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+                    radius = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+                    rule = Rule.valueOf(staticReader.readLine().split(" ")[1]);
+                    neighborhoodType = NeighborhoodType.valueOf(staticReader.readLine().split(" ")[1]);
+                    maxStep = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+                    firstAlive = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+                    gridSizeX = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+                    gridSizeY = Integer.parseInt(staticReader.readLine().split(" ")[1]);
+                    gridSizeZ = Integer.parseInt(staticReader.readLine().split(" ")[1]);
 
-                staticReader.close();
+                    staticReader.close();
 
-                // Read dynamic file
-                BufferedReader dynamicReader = new BufferedReader(new FileReader("txt/dynamic_" + input + ".txt"));
-                String line;
+                    // Read dynamic file
+                    BufferedReader dynamicReader = new BufferedReader(new FileReader("txt/dynamic_" + input + ".txt"));
+                    String line;
 
-                while ((line = dynamicReader.readLine()) != null) {
-                    String[] position = line.split(" ");
-                    int x = Integer.parseInt(position[0]);
-                    int y = Integer.parseInt(position[1]);
-                    int z = Integer.parseInt(position[2]);
-                    coordinates.add(new Coordinates(x, y, z));
+                    while ((line = dynamicReader.readLine()) != null) {
+                        String[] position = line.split(" ");
+                        int x = Integer.parseInt(position[0]);
+                        int y = Integer.parseInt(position[1]);
+                        int z = Integer.parseInt(position[2]);
+                        coordinates.add(new Coordinates(x, y, z));
+                    }
+                    dynamicReader.close();
+
+                    GameOfLife game = new GameOfLife(coordinates, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep, neighborhoodType, rule, firstAlive, rep);
+                    game.start();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                dynamicReader.close();
-
-                GameOfLife game = new GameOfLife(coordinates, gridSizeX, gridSizeY, gridSizeZ, radius, maxStep, neighborhoodType, rule);
-                game.start();
-
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }

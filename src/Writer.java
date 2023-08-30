@@ -8,12 +8,12 @@ public class Writer {
     private final int gridSizeX = 30;
     private final int gridSizeY = 30;
     private final int gridSizeZ = 30;
-    private final int radius = 1;
-    private final int maxStep = 500;
-    private final Rule rule = Rule.CORAL;
-    private final GameOfLife.NeighborhoodType neighborhoodType = GameOfLife.NeighborhoodType.MOORE;
-    private final double lowerBound = 0.4;
-    private final double upperBound = 0.6;
+    private final int radius = 2;
+    private final int maxStep = 100;
+    private final Rule rule = Rule.MAZE;
+    private final GameOfLife.NeighborhoodType neighborhoodType = GameOfLife.NeighborhoodType.VON_NEUMANN;
+    private final double lowerBound = 0.40;
+    private final double upperBound = 0.60;
     private double firstAlive;
 
 
